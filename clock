@@ -1,0 +1,86 @@
+<style>
+    body {
+        background: #191919;
+    }
+</style>
+
+<div class="clock">
+    <div class="date" id="d"></div>
+    <div class="time" id="t"></div>
+</div>
+
+<style>
+
+    body {
+        display:flex;
+        justify-content:center;
+        text-align:center;
+    }
+
+    .clock {
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .time {
+    font-size: 20vmin;
+    font-weight:700;
+    white-space: nowrap;
+}
+
+.date {
+    font-size: 10vmin;
+}
+
+.clock {
+    color: #fff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    position: relative; /* this is required */
+}
+
+.clock {
+    position: relative;
+}
+
+.clock::before {
+    content: "✿";
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    transform: translate(-50%, -50%);
+    font-size: 30vmin; /* scales with text size */
+    line-height: 0;   /* prevents weird vertical offset */
+    color: rgba(255, 255, 255, 0.15);
+    z-index: -1;
+    pointer-events: none;
+}
+
+</style>
+
+<script>
+    function updateClock() {
+        const t = document.getElementById("t");
+        const d = document.getElementById("d");
+        const now = new Date();
+
+        let h = now.getHours();
+        let m = now.getMinutes();
+        const ampm = h >= 12 ? "pm" : "am";
+        h = h % 12 || 12;
+
+        const pad = (n) => (n < 10 ? "0" + n : n);
+        t.textContent = `${h}:${pad(m)} ${ampm}`;
+
+        const w = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+        const mo = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+        d.textContent = `${w[now.getDay()]} ୨୧ ${mo[now.getMonth()]} ${now.getDate()}`;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+</script>
+
